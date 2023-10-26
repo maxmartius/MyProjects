@@ -1,0 +1,108 @@
+question: What is the topic? - lecture: 2_ML_Validity - strategy: strict
+Database Query took 14.932461500167847seconds
+Response from ChatGPT took 2.0120115280151367seconds
+
+question: What is the topic? - lecture: 2_ML_Validity - strategy: strict
+Database Query took 14.449061870574951seconds
+Response from ChatGPT took 0.31209397315979004seconds
+
+question: What is the topic? - lecture: 2_ML_Validity - strategy: strict
+Database Query took 16.159125089645386seconds
+Response from ChatGPT took 6.832781076431274seconds
+
+question: What is the topic? - lecture: 2_ML_Validity - strategy: strict
+Database Query took 17.282666206359863seconds
+Response from ChatGPT took 1.722364902496338seconds
+
+question: What is the topic? - lecture: 2_ML_Validity - strategy: strict
+Database Query took 16.381750345230103seconds
+Response from ChatGPT took 1.7398185729980469seconds
+
+question: What is the topic? - lecture: 2_ML_Validity - strategy: strict
+Database Query took 15.759536027908325seconds
+Response from ChatGPT took 1.7085576057434082seconds
+
+question: What is the topic? - lecture: AI_Factory_Auditability_in_ML_Systems - strategy: strict
+Database Query took 14.361207246780396seconds
+Response from ChatGPT took 2.2842319011688232seconds
+
+question: What is the topic? - lecture: AI_Factory_Auditability_in_ML_Systems - strategy: strict
+Database Query took 15.531118392944336seconds
+Response from ChatGPT took 6.569236755371094seconds
+
+question: What is the topic? - lecture: AI_Factory_Auditability_in_ML_Systems - strategy: strict
+Database Query took 15.637136459350586seconds
+Response from ChatGPT took 1.4450373649597168seconds
+
+question: Please explain the topic - lecture: AI_Factory_Auditability_in_ML_Systems - strategy: strict
+Database Query took 15.321683168411255seconds
+Response from ChatGPT took 7.633544445037842seconds
+
+question: What is the topic? - lecture: AI_Factory_Auditability_in_ML_Systems - strategy: strict
+Database Query took 19.238866329193115seconds
+Response from ChatGPT took 6.7823357582092285seconds
+
+question: Please explain this slide - lecture: AI_Factory_Auditability_in_ML_Systems - strategy: strict
+Database Query took 20.093013286590576seconds
+Response from ChatGPT took 8.313809156417847seconds
+
+question: What is the topic? - lecture: 4_ArchitectureAndDesign - strategy: strict
+Database Query took 20.363399028778076seconds
+Response from ChatGPT took 6.5006489753723145seconds
+
+question: What is the topic? - lecture: 4_ArchitectureAndDesign - strategy: strict
+Database Query took 27.940397262573242seconds
+Response from ChatGPT took 1.2198433876037598seconds
+
+question: Please explain object behavior modeling - lecture: 4_ArchitectureAndDesign - strategy: strict
+Database Query took 16.170248985290527seconds
+Response from ChatGPT took 6.5165135860443115seconds
+
+question: What is the topic? - lecture: KubernetesLecture - strategy: strict
+Database Query took 16.25293278694153seconds
+Response from ChatGPT took 1.9641826152801514seconds
+
+question: What are good methods to deploy machine learning projects? - lecture: KubernetesLecture - strategy: strict
+Database Query took 28.86193299293518seconds
+Response from ChatGPT took 18.06318426132202seconds
+
+question: What are good methods to deploy machine learning projects? - lecture: KubernetesLecture - strategy: creative
+Database Query took 18.67897939682007seconds
+Response from ChatGPT took 11.122225284576416seconds
+
+question: Where is software running? - lecture: KubernetesLecture - strategy: strict
+Database Query took 15.002769708633423seconds
+Response from ChatGPT took 3.0764830112457275seconds
+
+question: How were the old days? - lecture: KubernetesLecture - strategy: creative
+Database Query took 17.262507677078247seconds
+Response from ChatGPT took 3.84867000579834seconds
+
+question: How were the old days? - lecture: KubernetesLecture - strategy: strict
+Database Query took 15.648903608322144seconds
+Response from ChatGPT took 3.8975658416748047seconds
+
+question: How were the old days? - lecture: KubernetesLecture - strategy: strict
+Database Query took 30.859164237976074seconds
+Response from ChatGPT took 9.76802372932434seconds
+
+question: What are Language Chains? - lecture: 4_ArchitectureAndDesign - strategy: strict
+Database Query took 15.089385271072388seconds
+Response from ChatGPT took 11.459903478622437seconds
+
+question: What are Language Chains? - lecture: 4_ArchitectureAndDesign - strategy: creative
+Database Query took 16.849650621414185seconds
+Response from ChatGPT took 9.839888095855713seconds
+
+question: Describe pros and cons of Fairness through Unawareness - lecture: 8_EthicsAndFairness - strategy: strict
+Database Query took 14.408253908157349seconds
+Response from ChatGPT took 8.520507574081421seconds
+
+question: Describe pros and cons of Fairness through Unawareness - lecture: 8_EthicsAndFairness - strategy: creative
+Database Query took 16.37055015563965seconds
+Response from ChatGPT took 15.160426139831543seconds
+
+question: Describe pros and cons of Fairness through Unawareness - lecture: 8_EthicsAndFairness - strategy: strict
+Database Query took 15.523631572723389seconds
+Response from ChatGPT took 12.556434392929077seconds
+

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> Upload </title>
+        <style>
+            label {
+                background-color: lightgrey;
+                width: auto;
+                color: black;
+                padding: 5px;
+                border: 3px solid black;
+                border-radius: 10px;
+            }
+            label:hover {
+                cursor: pointer;
+            }
+            button {
+                width: auto;
+                color: black;
+            }
+            [type=file] {
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+            }
+            #box {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        </style>
+        <script>
+            function upupdate(){
+                var input = document.querySelector('#file');
+                input.addEventListener('change', function(e){
+                    var filename = "";
+                    fileName = e.target.value;
+                    filename = fileName.split( '\\' ).pop();
+                    document.getElementsByClassName('fakebutton')[0].innerHTML = filename;
+                })
+            };
+            document.addEventListener('DOMContentLoaded', (event) => {        
+                var searchForm = document.getElementById('up');
+                searchForm.addEventListener('submit', async function(event) {
+                    document.getElementById("wait").innerHTML = "Please wait while uploading. Once the upload is finished you will be automatically redirected to th chat page!";
+                })})
+        </script>
+    </head>
+    <body>
+        <div id="box">
+            <label id="choosefile" form="up" for="file" class="nav-button fakebutton" onclick="upupdate()">Choose File</label>
+            <form method="post" id="up" action="/upload" enctype="multipart/form-data">
+                <input type="file" name="file" id="file">
+                <button id="loader" type="submit" class="nav-button">Upload Context</button>
+            </form>
+            <div id="wait">
+            </div>
+        </div>
+    </body>
+</html>

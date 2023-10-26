@@ -1,0 +1,24 @@
+# start with 
+# delete with kubectl -n test-namespace delete ingress test-ingress
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatbot-deployment
+  namespace: chatbot-namespace
+  labels:
+    app: chatbot-application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatbot-application
+  template:
+    metadata:
+      labels:
+        app: chatbot-application
+    spec:
+      containers:
+      - name: chatbot-container
+        image: docker.io/se4aig4/chatbot:v3.8
+        ports:
+        - containerPort: 5000

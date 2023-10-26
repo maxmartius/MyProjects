@@ -1,0 +1,24 @@
+# start with 
+# delete with kubectl -n test-namespace delete ingress test-ingress
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-deployment
+  namespace: test-namespace
+  labels:
+    app: demo-application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-application
+  template:
+    metadata:
+      labels:
+        app: demo-application
+    spec:
+      containers:
+      - name: kuard
+        image: gcr.io/kuar-demo/kuard-amd64:1
+        ports:
+        - containerPort: 8080

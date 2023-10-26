@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> Lecture-ChatBOT </title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/chatstyles.css') }}">
+        
+        <style>
+            #loading {
+                width: 2rem;
+                height: 2rem;
+                border: 5px solid #f3f3f3;
+                border-top: 6px solid #9c41f2;
+                border-radius: 100%;
+                margin: auto;
+                visibility: hidden;
+                animation: spin 1s infinite linear;
+            }
+            #loading.display {
+                visibility: visible;
+            }
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+        <script>
+            var course = "{{ course }}";
+            var page = "{{ pages }}";
+
+            if (page != "0"){
+                console.log("kurs: " + course + ", page: " + page);
+            }else {
+                console.log("kurs: " + course);
+            }
+
+            //create initial message index
+            if (sessionStorage.getItem('index') == null) {
+                 sessionStorage.setItem('index', 0);
+            };
+
+            // print the entire sessionstorage , needs to be called on GET request of site , so always once at the beginning
+            function print_sessionStorage(){
+                setTimeout(() => { 
+                if (sessionStorage.getItem('index') > 0) {
+                    var inhalt = document.getElementById('conversation');
+                    for (let i=0; i < sessionStorage.length; i++) { 
+                        //if message exists and is not empty
+                        if ((sessionStorage.getItem('User.' + i) != null) && (sessionStorage.getItem('User.' + i) != "")){
+                            inhalt.innerHTML += "<div class='block question'><h3 class='participant'>You:</h3><p>" + 
+                            sessionStorage.getItem('User.' + i) + "</div>"};
+                        if ((sessionStorage.getItem('AI.' + i) != null) && (sessionStorage.getItem('AI.' + i) != "")){
+                            inhalt.innerHTML += "<div class='block answer'><h3 class='participant'>AI:</h3><p>" + 
+                            sessionStorage.getItem('AI.' + i) + "</div>"};
+                    };
+                }
+                ; }, 100);
+            }
+
+            // on get sessionStorage gets drawn (all old content)
+            print_sessionStorage()
+
+            //stream answer 
+            document.addEventListener('DOMContentLoaded', (event) => {        
+                var searchForm = document.getElementById('myform');
+                searchForm.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    
+                    document.getElementById("sender").disabled = true
+
+                    document.getElementById("loading").classList.add("display")
+                    setTimeout(()=>{
+                        document.getElementById("loading").classList.remove("display")
+                    }, 10000000);
+
+                    var formData = new FormData(searchForm);
+                    var question = formData.get('ask');
+                    var conv_content = document.getElementById('conversation');
+                    document.getElementsByName("ask")[0].value = ""
+        
+                    //print question to site
+                    if (question != ""){
+                        sessionStorage.setItem('User.' + sessionStorage.getItem('index'), question);
+                        sessionStorage.setItem('index', sessionStorage.length);
+                        conv_content.innerHTML += "<div class='block question'><h3 class='participant'>You:</h3><p>" + question + "</div>"
+
+                    };
+
+                    // ask route for response
+                    try {
+                        const response = await fetch('/completion', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    document.getElementById("loading").classList.remove("display");
+                    const reader = response.body.getReader();
+                    // while loop in constante die in sessionstorage kann
+                    // aber sonst dent content addieren funktioniert nicht ??
+                    var answer_content = ""
+                    conv_content.innerHTML += "<div class='block answer'><h3 class='participant'>AI:</h3><p></div>"
+                    var last_p = document.getElementsByTagName("p")
+                    while (true) {
+                        const {done, value} = await reader.read(); 
+                        if (done) break; 
+                        const text = new TextDecoder().decode(value); 
+                        answer_content += text
+                        last_p[last_p.length-1].innerHTML += text; 
+                        window.scrollTo(0, document.body.scrollHeight)
+                    }
+
+                    console.log("frage: " + question)
+                    console.log("antwort: " + answer_content)
+                    
+                    //frage in session storage packen
+                    if (answer_content != ""){
+                        sessionStorage.setItem('AI.' + sessionStorage.getItem('index'), answer_content);
+                        sessionStorage.setItem('index', sessionStorage.length);
+                    };
+
+                    } catch (error) {
+                        console.error(error);
+                    }
+                    document.getElementById("sender").disabled = false
+                });
+            });
+
+            function logout(){
+                sessionStorage.clear()
+            };
+
+        </script>
+    </head>
+    <body>
+        <nav class="navbar">
+           
+                    <a href="rechoose" class="nav-item nav-link"> 
+                        <img alt="logo" src="https://upload.wikimedia.org/wikipedia/commons/a/ae/73424-sync-symbol.svg" data-v-4304ca62="">
+                        <span class="link-text">
+                            <button class="nav-button">Course choice</button>
+                        </span>
+                    </a>
+                    <a href="" class="nav-item nav-link"> 
+                        <span class="link-text">
+                            <form method="get" id="up" action="/upload">
+                                <button type="submit" class="nav-button">Upload Context</button>
+                            </form>
+                        </span>
+                    </a>
+                <!--
+                <li class="nav-item">
+                    <a href="" class="nav-link"> 
+                        <p>&#11044;</p>
+                        <span class="link-text">
+                            Chat name
+                        </span>
+                    </a>
+                </li>
+                -->
+
+                    <a href="feedback" class="nav-item nav-link"> 
+                        <span class="link-text">
+                            <button class="nav-button">Feedback</button>
+                        </span>
+                    </a>
+                    <a href="" class="nav-item nav-link">
+                        <span class="link-text">
+                            <button class="nav-button" onclick="logout()">Clear Conversation</button>
+                        </span>
+                    </a>
+        </nav>
+
+        <main>
+        <div class="intro">
+            <h1>Welcome to the Lecture-ChatBot</h1>
+            <p>
+                Here you can ask questions about self uploaded context 
+                or the already existing context from our databank.
+                In the navigation bar on the top you can find
+                a button to upload new context or give us some feedback.
+            </p>
+            <br>
+            <h5><em id="coursetext">Current course:</em> <em id="coursetitle"> {{ course }} : {{ pages }}</em></h5>
+        </div>
+        <div class="conversation" id="conversation">
+        </div>
+
+        <div class="input">
+            <div id="loading"></div>
+
+            <form id = "myform" action = "" method="post">
+                <input type="text" name="ask">
+                <div class="delimiter"></div>
+                <!-- <svg class="search-icon" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+                    </path>
+                </svg> -->
+                <select name="strategy" id="strat" form="myform">
+                    <option value="strict">strict</option>
+                    <option value="creative">creative</option>
+                </select>
+                <button id="sender" type="submit">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" class="h-4 w-4 m-1 md:m-0" stroke-width="2"><path d="M.5 1.163A1 1 0 0 1 1.97.28l12.868 6.837a1 1 0 0 1 0 1.766L1.969 15.72A1 1 0 0 1 .5 14.836V10.33a1 1 0 0 1 .816-.983L8.5 8 1.316 6.653A1 1 0 0 1 .5 5.67V1.163Z" fill="currentColor"></path></svg>
+                    <!-- <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 0l-6 22-8.129-7.239 7.802-8.234-10.458 7.227-7.215-1.754 24-12zm-15 16.668v7.332l3.258-4.431-3.258-2.901z"/></svg> -->
+                </button>
+            </form>
+        </div>
+
+        </main>
+    </body>
+</html>

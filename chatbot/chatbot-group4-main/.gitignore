@@ -1,0 +1,7 @@
+# Ignore PyCharm files
+dataIntegrationPipeline/.idea
+dataIntegrationPipeline/venv
+
+__pycache__/
+
+.idea

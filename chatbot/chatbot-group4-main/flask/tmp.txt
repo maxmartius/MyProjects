@@ -1,0 +1,9 @@
+To ensure the validity of an AI experiment, you can follow these three points:
+
+1. Align with application goal: Make sure that your experiment is aligned with the specific goal or problem you are trying to solve. This will help in designing relevant metrics and evaluation criteria.
+
+2. Control for validity threats: Take steps to control potential threats to internal and external validity. For example, avoid information leakage from test to training data, ensure reproducibility and transparency in experimental setups, and address issues like selection bias or sampling bias.
+
+3. Use appropriate metrics and baselines: Choose suitable metrics that measure the desired properties of your model's performance. Establish baselines by comparing against known processes or using prior system performance data as a reference point.
+
+By following these points, you can enhance the reliability and credibility of your AI experiments.

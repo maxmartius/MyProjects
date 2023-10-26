@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> Lecture-ChatBot </title>
+        <style>
+            body {
+                background-color: darkgray;
+            }
+            form {
+                text-align: center;
+            }
+            select {
+                width: 7rem;
+            }
+            .centered {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 10px;
+                text-align: center;
+            }
+        </style>
+        <script>
+            //get the list of lectures as a string
+            var list = '{{ lectures }}';
+
+            //convert the string into a usable list
+            {#function string_to_array(inp){
+                list_like = inp.replaceAll('&#39;', '')
+                almost = list_like.substr(1,list_like.length-2)
+                output = almost.split(',')
+                return output
+            }#}
+
+            function string_to_json(inp){
+                list_like = inp.replaceAll('&#39;', '')
+                almost = list_like.substr(1,list_like.length-2)
+                output = almost.replaceAll('{', '{"').replaceAll('}', '"}').replaceAll(': ', '": "').replaceAll('}, {', '}# {').replaceAll(', ', '", "').replaceAll('}# {', '}, {')
+                return JSON.parse('[' + output + ']')
+            }
+
+            function set_page_numbers(n){
+                let nums = "<option value='0'>All</option>"
+                for (let i = 1; i < n + 1; i++) {
+                    nums += "<option value='" + i +"'>" + i + "</option>"
+                }
+                return nums
+            }
+
+            //console.log(typeof(list))
+            //console.log(list)
+            //console.log(string_to_array(list))
+            
+            //insert the list entries as options to choose from
+            //wating needed so the html is build and dom can bee accesed
+            setTimeout(() => {
+                var json = string_to_json(list)
+                var auswahl = document.getElementsByName('course')[0]
+                var auswahl2 = document.getElementsByName('pagenumber')[0]
+                //console.log(auswahl[0])
+                for (let i = 0; i < json.length; i++) {
+                    auswahl.innerHTML += "<option value='" + json[i]["lecture_name"] +"'>" + json[i]["lecture_name"] + "</option>";
+                }
+                auswahl2.innerHTML = set_page_numbers(parseInt(json[0]["page_num"]))
+                auswahl.addEventListener("change", function() {
+                    let num = json.find(j => j["lecture_name"] === auswahl.value)["page_num"]
+                    auswahl2.innerHTML = set_page_numbers(parseInt(num))
+                });
+                }, 100);
+
+        </script>
+    </head>
+    <body>
+        <div class="centered">
+            <h3>Lecture-ChatBOT</h3>
+            <h6>Your helper for learning!</h6>
+            <p>
+                On this site you can choose what lecture you would like to ask questions about.
+                If your question is for a specific page of the lecture you can choose so.
+                Once you chose you will be redirected to the chat site, where you can ask questions,
+                upload new lectures or give feedback about your experience.
+                The answering process can sometimes take some time, so just wait a little and you will get your answer.
+            </p>
+            <p>Please choose a lecture to start a conversation about!</p>
+            <form method="post" id="myform">
+                <select name="course">
+                </select>
+                <select name="pagenumber">
+                </select>
+                <br>
+                <button type="submit"> Chat starten </button>
+            </form>
+            <p>Disclaimer!
+                The chat needs javascript to work.
+            </p>
+        </div>
+    </body>
+</html>

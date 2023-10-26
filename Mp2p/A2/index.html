@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Byte Muzzle <byte.muzzle@protonmail.com>">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <title>Luci App - Deutschland checkt ein!</title>
+    <meta name="title" content="Luci App - Deutschland checkt ein!
+  ">
+    <meta name="description" content="Mit der Luci App kannst du beliebig oft bei Luca einchecken. Wer und wo du bist, kannst du frei wählen. Das geht, weil die Luca App nicht sicher gebaut wurde.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://luci-app.de/">
+    <meta property="og:title" content="Luci App - Deutschland checkt ein!
+  ">
+    <meta property="og:description" content="Mit der Luci App kannst du beliebig oft bei Luca einchecken. Wer und wo du bist, kannst du frei wählen. Das geht, weil die Luca App nicht sicher gebaut wurde.">
+    <meta property="og:image" content="https://luci-app.de/bindrin.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://luci-app.de/">
+    <meta property="twitter:title" content="Luci App - Deutschland checkt ein!
+  ">
+    <meta property="twitter:description" content="Mit der Luci App kannst du beliebig oft bei Luca einchecken. Wer und wo du bist, kannst du frei wählen. Das geht, weil die Luca App nicht sicher gebaut wurde.">
+
+    <meta property="twitter:image" content="https://luci-app.de/bindrin.jpg">
+
+    <script src="./js/html5-qrcode.js" type="application/javascript"></script>
+    <script src="./js/rv-crypto.js" type="application/javascript"></script>
+    <script src="./js/elliptic.js" type="application/javascript"></script>
+    <script src="./js/sha256.js" type="application/javascript"></script>
+    <script src="./js/forge.js" type="application/javascript"></script>
+
+    <link rel="stylesheet" href="/build/tailwind.css">
+
+</head>
+
+<header class="absolute z-10 top-0 w-full">
+    <div class="container mx-auto py-4 px-4">
+        <h2 class="text-3xl text-gray-800 font-serif font-light tracking-tight">luci</h2>
+    </div>
+</header>
+
+
+
+<main class="bg-luci-main">
+
+    <div class="bg-warmgray-200 min-h-screen justify-center flex flex-col relative pt-24 xl:py-24 xl:pb-24">
+        <div class="mx-auto max-w-7xl px-4">
+            <h1 class="text-5xl text-center tracking-tight font-light text-gray-900 sm:text-5xl md:text-6xl">
+                <span class="block xl:inline tracking-wide">Deutschland checkt ein!</span>
+            </h1>
+            <p class="mt-3 text-center max-w-md mx-auto font-medium uppercase mb-6 text-base text-warmgray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                Gemeinsam die Luca App entzaubern
+            </p>
+            <div class="flex text-center animate-bounce">
+                <svg xmlns="https://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                </svg>
+            </div>
+        </div>
+
+        <section id="webapp" class="shadow-lg transition duration-500 ease-in-out hover:shadow-xl  bg-black pb-6 px-6 text-white lg:rounded-2xl max-w-4xl w-full mx-auto sm:flex sm:flex-col md:mt-8 tracking-wide">
+            <div class="absolute z-10 t-0 -ml-6" >
+                <div id="reader" class="h-scren w-screen max-w-4xl"></div>
+            </div>
+            <header class="bg-warmgray-900 -mx-6 px-6 mb-6 rounded-t-xl text-xl py-4">
+                Wilkommen bei <span class="font-serif text-2xl tracking-tight font-light">luci</span>
+            </header>
+            <p class="hidden py-2 px-6 rounded-full bg-pink-800 sm:block text-xs mb-4 tracking-wider text-center"><span class="text-pink-300 font-medium">Hinweis: </span>Wir empfehlen die Nutzung auf deinem Smartphone im Browser.</p>
+
+            <div id="checkin-form" class="text-left">
+                <form class="border-0 xl:flex">
+                    <div class="flex-grow xl:mr-8 xl:flex xl:flex-col xl:justify-center">
+                        <label class="block font-medium  mb-2" for="exampleFormControlSelect1">Wen m&ouml;chtest Du einchecken?</label>
+                        <select class="w-full mb-8 block bg-transparent border-2 py-3 px-5 focus:ring-pink-500 focus:border-pink-500 shadow-sm border-gray-300 rounded-md" id="recipients">
+                            <option class="text-gray-900" selected value="0">Bitte ausw&auml;hlen...</option>
+                            <option class="text-gray-900" value="1">Alle Ministerpr&auml;sidenten</option>
+                            <option class="text-gray-900" value="2">Vier Popmusiker</option>
+                            <option class="text-gray-900" value="3">25 Hans Musterm&auml;nner</option>
+                            <option class="text-gray-900" value="4">Nur mich (anonym)</option>
+                        </select>
+                    </div>
+                    <div class="text-center flex-none xl:w-40">
+                        <button onclick="init()" type="button" id="launchQrScanner">
+                            <label class="block text-center font-medium mb-2">
+                                QR-Code scannen
+                            </label>
+                            <div class="p-8 rounded-full hover:bg-pink-600 bg-pink-500 text-black max-w-xs xl:p-4 transform transition duration-200">
+                                <svg xmlns="https://www.w3.org/2000/svg" class="w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div id="status" class="hidden font-mono tracking-widest transition delay-150 duration-300 ease-in-out animate-pulse py-8 text-center font-xs">
+                Stay tuned... Hochsicherheits-Checkin #<span id="count" class="text-pink-500">-</span> für <span id="venuename" class="text-pink-500">-</span> läuft.
+            </div>
+            <div id="result" class="hidden text-center font-semibold text-gray-200 py-6">
+                <svg xmlns="https://www.w3.org/2000/svg" class="h-6 w-6 text-pink-500 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+                Vielen Dank!
+            </div>
+        </section>
+
+        <div class="max-w-4xl px-6 mx-auto text-warmgray-500 mt-4 text-xs flex flex-row">
+            <div class="flex-grow mr-4 mb-6">
+                <span class="font-medium">Disclaimer:</span> Trotz Ende-zu-Ende-Verschl&uuml;sselung und guten Bewertungen meistens unabh&auml;ngiger Datenschutz&shy;beauftragter stelle bitte sicher, dass du nur Menschen eincheckst, von denen du die Zustimmung dazu hast.
+            </div>
+            <div class="flex-none">
+                <div id="again" class="block text-right">
+                    <button onclick="reload()" type="button" id="reload" class="py-2 px-4 bg-gray-300 transform hover:-translate-y-1 transition duration-200 hover:-mt-1 ease-in-out hover:shadow-lg rounded-full text-black text-xs btn-primary">Noch einmal?</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bg-white py-24 xl:py-48 xl:flex xl:justify-center xl:container mx-auto">
+
+        <div class="mx-white max-w-2xl leading-loose text-gray-900 mb-8 xl:mb-0  mx-auto px-6">
+            <video width="480" height="480" class="w-full  p-4 bg-black" controls>
+                <source src="luci.ogg" type="video/ogg" />
+                <source src="luci.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="mx-white max-w-2xl leading-loose text-gray-900  mx-auto px-6 flex justify-center flex-col">
+            <div>
+                <p class="mb-8">
+                    Mit unserer Luci App kannst du beliebig oft bei Luca einchecken. Wer und wo du bist, kannst du völlig frei wählen. Das geht, weil die Luca App nicht sicher gebaut wurde. Und wenn die Luca Macher diese Lücke schließen wollen, müssen sie ihr Anonymitätsversprechen brechen. Denn Filtern kann ja nur, wer reingucken kann. Nix reingucken. Nix filter. Alles klar.
+                </p>
+                <p class="mb-8">
+                    Wir demonstrieren hier einfach nur, was seit Monaten an Analysen zur Software öffentlich diskutiert wurde. Dass ein Rapper auf ein windiges Unternehmen reinfällt ist eine Sache, aber diejenigen, die unsere Steuern verwalten, sollten sie gerade in diesen Zeiten etwas achtsamer umverteilen. (Toll wäre zB. die Pflegekräfte mit nem Geld zu bewerfen!)
+                </p>
+                <a href="#webapp" id="reload" class="py-4 px-8 inline-bl bg-gray-300 transform inline-flex hover:-translate-y-1 transition duration-200 hover:-mt-1 ease-in-out hover:shadow-lg rounded-full text-black btn-primary">Jetzt einchecken</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bg-gray-300 ">
+        <div class="max-w-7xl mx-auto py-24 xl:py48 px-6">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-center text-3xl text-gray-900 sm:text-4xl mb-12 xl:mb-16">
+                    FAQ
+                </h2>
+
+                <button class="accordion hover:cursor-pointer text-lg text-center py-6 block w-full">
+                    Was ist eigentlich das Problem?
+                </button>
+                <div class="panel overflow-hidden max-h-0 border-b border-gray-200">
+                    <p class="pb-8 leading-loose text-gray-900">
+                        Die Lizenzen für die Luca App haben uns Steuerzahler viel Geld gekostet. Die Luca App ist dabei nicht besser, als die schon existierende Corona-Warn-App. Die kann alle Funktionen der Luca App, ist schon gebaut und dazu noch datensicher, Open Source und dezentral. Sie ist auch fast 27 Millionen Mal installiert Okay, was sie nicht kann: Die Gesundheitsämter mit Datenschrott fluten. Wir wollen alle wieder raus und knutschen gehen, aber es gibt einfach keinen Grund Geld für eine Bullshit-Lizenz auszugeben, wenn es eine bessere Alternative gibt.
+                    </p>
+                </div>
+                <button class="accordion hover:cursor-pointer text-lg text-center py-6 block w-full">
+                    Wie geht das technisch und war das nicht offensichtlich?
+                </button>
+                <div class="panel overflow-hidden max-h-0 border-b border-gray-200">
+                    <p class="pb-8 leading-loose text-gray-900">
+                        Statt viele verteilte Zettel in den Restaurants ist die Luca App ein einziger großer Zettel im Internet und zwar der gleiche für alle Restaurants. Die Daten werden darauf "verschlüsselt." Durch die Verschlüsselung kann Luca aber nicht mehr kontrollieren, was man auf den Zettel schreibt. Zwar behauptet Luca, Telefonnummern zu verifizieren, aber auch das haben sie falsch umgesetzt, so dass die Prüfung umgangen werden kann. Luca wird seit Wochen davor gewarnt und gibt die Schwachstelle auch freimütig zu, weil sie konzeptionell ist und nicht behoben werden kann. So richtig beheben müssen sie das alles aber auch nicht, denn das ganze Sammeln von persönlichen Daten ist im Grunde sowieso unnötig, da die Corona-Warn-App uns schneller und direkter warnen kann, ohne uferlos viele Bewegungsprofile anzulegen.
+                    </p>
+                </div>
+                <button class="accordion hover:cursor-pointer text-lg text-center py-6 block w-full">
+                    Greift ihr die Luca App richtig an? Wie Blackhat Hacker?
+                </button>
+                <div class="panel overflow-hidden max-h-0 border-b border-gray-200">
+                    <p class="pb-8 leading-loose text-gray-900">
+                        Nein, wir haben nur eine Sicherheitslücke aufgezeigt, aber den Angriff selbst wollen wir nicht durchführen. Wir haben testweise alle Ministerpräsident*innen in ganz viele Restaurants angemeldet, aber den Betreiber*innen von Luca werden wir gerne unsere Check-ins zur Vefügung stellen wenn sie danach fragen, damit sie diese wieder rausfiltern können. Sonst würden die Gesundheitsämter mit noch mehr Datenmüll zugekleistert als die durch Luca ohnehin schon bekommen. Die Gesundheitsämter haben genug zu tun. Das meint übrigens auch der Bundesdatenschutzbeauftragte Ulrich Kelber. (Zeit Interview: <a class="underline" target="_blank" rel="noopener" href="https://www.zeit.de/digital/datenschutz/2021-04/ulrich-kelber-corona-warn-app-luca-datenschutz-check-in">(https://www.zeit.de/digital/datenschutz/2021-04/ulrich-kelber-corona-warn-app-luca-datenschutz-check-in)</a>
+                    </p>
+                </div>
+                <button class="accordion hover:cursor-pointer text-lg text-center py-6 block w-full">
+                    Kann man nicht auch so in jedem Restaurant mit falschem Namen einchecken?
+                </button>
+                <div class="panel overflow-hidden max-h-0 border-b border-gray-200">
+                    <p class="pb-8 leading-loose text-gray-900">
+                        Ja klar, aber nicht massenhaft.
+                    </p>
+                </div>
+                <button class="accordion hover:cursor-pointer text-lg text-center py-6 block w-full">
+                    Habt ihr jetzt die Gesundheitsämter mit Daten geflutet?
+                </button>
+                <div class="panel overflow-hidden max-h-0 border-b border-gray-200">
+                    <p class="pb-8 leading-loose text-gray-900">
+                        Nein, die haben wirklich genug zu tun. Wir haben gezeigt, dass man theoretisch die Luca App mit Datenmüll fluten kann. Dadurch wird deutlich, dass man Luca mit ein paar Zeilen Codeänderungen kaputt machen könnte.
+                    </p>
+                </div>
+                <button class="accordion hover:cursor-pointer text-lg text-center py-6 block w-full">
+                    Ich will echt mal ins Restaurant. Gibt es denn bessere Lösungen?
+                </button>
+                <div class="panel overflow-hidden max-h-0 border-b border-gray-200">
+                    <p class="pb-8 leading-loose text-gray-900">
+                        Ja, es gibt eine Corona-Warn-App. Die ist anonym, dezentral und schneller. Da sie Daten auf deinem Handy und nicht in der Cloud speichert. Sie schickt die Daten allerdings nicht an das Gesundheitsamt, bei denen kannst du dich aber melden wenn du eine Warnung bekommst - was übrigens viel schneller passiert als wenn das Amt dich suchen und anrufen muss. SAP und Telekom (die die Corona-Warn-App entwickelt haben) sind prinzipiell scheiss Unternehmen, die teils ganz offen auch mit Geheimdiensten zusammenarbeiten. Aber die App an sich ist echt okay.
+                    </p>
+                </div>
+                <button class="accordion hover:cursor-pointer text-lg text-center py-6 block w-full">
+                    Aber die Vergabe wurde doch transparent vergeben, oder?
+                </button>
+                <div class="panel overflow-hidden max-h-0 border-b border-gray-200">
+                    <p class="pb-8 leading-loose text-gray-900">
+                        Naja. Bei der Corona-Warn-App wurden vom BMI bestimmte Anforderung beauftragt. Das wurde von SAP und Telekom gebaut. So kacke diese Firmen sind, sie haben in dem Fall die Regularien eingehalten, es dezentral, open source und datenschutzsicher zu gestalten. Bei der Luca-App hat ein privates Unternehmen mit ein paar Investor*innen eine fixe Idee aus dem Boden gestampft und der Politik für Millionen angedreht. Über 20 Millionen Euro haben die Länder dafür ausgegeben, das System ein Jahr lang nutzen zu dürfen. Ja, nur ein Jahr. Danach müssten wir vermutlich weitere Millionen nachwerfen.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="bg-warmgray-900 text-gray-300">
+        <div class="container mx-auto px-6 py-24">
+            Impressum<br />
+            Lisa Müller <br />
+            Charlottenstraße 59<br />
+            10117 Berlin
+        </div>
+        <div>
+
+</main>
+
+<script src="./js/app.js"></script>
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+</script>
+
+
+</html>

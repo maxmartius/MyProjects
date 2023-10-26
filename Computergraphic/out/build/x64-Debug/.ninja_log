@@ -1,0 +1,14 @@
+# ninja log v5
+18	279	6425247801045455	CMakeFiles/CGPraktikum.dir/src/Color.cpp.obj	d2b4a71a2b0cb90e
+50	829	6425247806520422	CMakeFiles/CGPraktikum.dir/src/GLVector.cpp.obj	17b4802d497a794b
+34	837	6425247806590494	CMakeFiles/CGPraktikum.dir/src/GLMatrix.cpp.obj	bbadc1c8a57c3c91
+66	839	6425247806590494	CMakeFiles/CGPraktikum.dir/src/GLPoint.cpp.obj	a299863ce5a96a3
+1	859	6425247806820708	CMakeFiles/CGPraktikum.dir/src/Camera.cpp.obj	99e0bece63a84694
+145	861	6425247806850722	CMakeFiles/CGPraktikum.dir/src/Sphere.cpp.obj	329070274cf7b21a
+82	867	6425247806910771	CMakeFiles/CGPraktikum.dir/src/Model.cpp.obj	ae0bf1c5b777675d
+113	896	6425247807221065	CMakeFiles/CGPraktikum.dir/src/Image.cpp.obj	bfcc953c55384259
+129	908	6425247807331153	CMakeFiles/CGPraktikum.dir/src/WireframeRenderer.cpp.obj	69c58d2c8129dfac
+161	957	6425247807831627	CMakeFiles/CGPraktikum.dir/src/SolidRenderer.cpp.obj	fa1a975bccc7a239
+98	1015	6425247808412149	CMakeFiles/CGPraktikum.dir/src/Scene.cpp.obj	c18d07d683d27c0e
+177	1030	6425247808552271	CMakeFiles/CGPraktikum.dir/src/main.cpp.obj	6b3d41c181624228
+1043	1882	6425247816868540	../CGPraktikum.exe	b989b99f49439151

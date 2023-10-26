@@ -1,0 +1,58 @@
+stages:   
+  - test     
+  - build
+  - deploy
+
+# create docker image and push to DockerHub (only if tagged commit)
+build_image:
+  stage: build
+  rules: 
+    # push a commit and give it a tag
+    # git tag -a v1.0 -m "Version 1.0" && git push origin --tags
+    - if: $CI_COMMIT_TAG
+    
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script: # https://docs.gitlab.com/ee/ci/docker/using_kaniko.html
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"},\"$(echo -n $CI_DEPENDENCY_PROXY_SERVER | awk -F[:] '{print $1}')\":{\"auth\":\"$(printf "%s:%s" ${CI_DEPENDENCY_PROXY_USER} "${CI_DEPENDENCY_PROXY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
+      --destination "${CI_REGISTRY_IMAGE}:latest"
+
+    # - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"},\"$(echo -n $CI_DEPENDENCY_PROXY_SERVER | awk -F[:] '{print $1}')\":{\"auth\":\"$(printf "%s:%s" ${CI_DEPENDENCY_PROXY_USER} "${CI_DEPENDENCY_PROXY_PASSWORD}" | base64 | tr -d '\n')\"}}}"
+    # - cat /kaniko/.docker/config.json
+    # - echo "Registry ${CI_REGISTRY}"
+    # - echo "Registry User ${CI_REGISTRY_USER}"
+    # - echo "Registry PW ${CI_REGISTRY_PASSWORD}"
+    # - echo "Image ${CI_REGISTRY_IMAGE}"
+    # - echo "Commit Tag ${CI_COMMIT_TAG}"
+    # - echo "Proxy Server {$CI_DEPENDENCY_PROXY_SERVER}"
+    # - echo "Proxy User ${CI_DEPENDENCY_PROXY_USER}"
+    # - echo "Proxy PW ${CI_DEPENDENCY_PROXY_PASSWORD}"
+
+# push kubernetes manifests to k8s (only if tagged commit)
+deploy_to_kubernetes:
+  stage: deploy
+  rules: 
+    - if: $CI_COMMIT_TAG # push a commit and give it a tag, with -> git tag -a v1.0 -m "Version 1.0" && git push origin --tags
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  script:
+    - kubectl config use-context SWS/lehre/ss-2023/se4ai/project/chatbot-group4:k8s-agent
+    - kubectl config set clusters.k8s.server $K8S_SERVER
+    - kubectl config set users.ci-user.token $R_BEARER_TOKEN
+    - kubectl config set-context ci-k8s --cluster=k8s --user=ci-user --namespace=chatbot-namespace
+    - kubectl config use-context ci-k8s
+    # - kubectl get pods --namespace=test-namespace
+
+    # - kubectl apply -f K8s/test-deployment.yaml
+    # - kubectl apply -f K8s/test-service.yaml
+    # - kubectl apply -f K8s/test-ingress.yaml
+    - kubectl apply -f K8s/chatbot-deployment.yaml
+    - kubectl apply -f K8s/chatbot-service.yaml
+    - kubectl apply -f K8s/chatbot-ingress.yaml

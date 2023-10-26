@@ -1,0 +1,8 @@
+{ "messages": [],
+ "temperature": 1.53,
+ "top_p": 0.3,
+ "max_tokens": 1000,
+ "presence_penalty": 1.3,
+ "frequency_penalty":1.2,
+ "stream":false }
+
