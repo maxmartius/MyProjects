@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Mp2p/A3/mptp3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Mp2p/CWA/cwa-app-android" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Mp2p/CWA/cwa-server" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Mp2p/luca/android" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Mp2p/luca/android_new" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Mp2p/luca/web" vcs="Git" />
+  </component>
+</project>
